@@ -1,0 +1,4 @@
+```{r test, cache = TRUE}
+x <- rnorm(10)
+mean(x)
+```

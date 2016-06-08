@@ -1,0 +1,27 @@
+# Code Externalization from R Markdown
+
+Write R code in an external R Markdown, then tangle it and use `read_chunk()` to read its chunks into the current document.
+```{r include_chunks, results='hide'}
+knitr::purl("foo.Rmd", quiet = TRUE)
+knitr::read_chunk("foo.R")
+```
+
+List of chunk labels that are now available.
+```{r all_labels}
+knitr::all_labels()
+```
+
+Use the `test` chunk from `read_chunk` -- re-runs code, so `x` changes every time this document knit.
+```{r test}
+```
+
+Having run that chunk, data from it is available to subsequent chunks.
+```{r run-x}
+sd(x)
+```
+
+Use the `test` chunk from `load_cache` -- re-uses cached values, so `x` doesn't change when this document is knit, but changes when the cache of the external R Markdown is updated.
+```{r cached-x}
+knitr::load_cache("test", path = "foo_cache/html/")
+mean(x)
+```
